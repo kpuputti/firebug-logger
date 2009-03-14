@@ -36,9 +36,21 @@ var LOG = function () {
     var level = 1;
     var getTime = function () {
         var now = new Date();
-        return "<" + now.getHours() +
-            ":" + now.getMinutes() +
-            ":" + now.getSeconds() +
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+        if (hours < 10) {
+            hours = "0" + hours;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        return "<" + hours +
+            ":" + minutes +
+            ":" + seconds +
             "> ";
     };
     var count = {
@@ -89,7 +101,7 @@ var LOG = function () {
         debug: function (msg) {
             if (level <= this.levels.DEBUG) {
                 try {
-                    console.log(getTime() + "DEBUG: " + msg);
+                    console.debug(getTime() + msg);
                     count.debug += 1;
                 } catch (e) {}
             }
@@ -97,7 +109,7 @@ var LOG = function () {
         info: function (msg) {
             if (level <= this.levels.INFO) {
                 try {
-                    console.log(getTime() + "INFO: " + msg);
+                    console.info(getTime() + msg);
                     count.info += 1;
                 } catch (e) {}
             }
@@ -105,7 +117,7 @@ var LOG = function () {
         warn: function (msg) {
             if (level <= this.levels.WARN) {
                 try {
-                    console.log(getTime() + "WARN: " + msg);
+                    console.warn(getTime() + msg);
                     count.warn += 1;
                 } catch (e) {}
             }
@@ -113,7 +125,8 @@ var LOG = function () {
         error: function (msg) {
             if (level <= this.levels.ERROR) {
                 try {
-                    console.log(getTime() + "ERROR: " + msg);
+                    console.error(getTime() + msg);
+                    console.trace();
                     count.error += 1;
                 } catch (e) {}
             }
